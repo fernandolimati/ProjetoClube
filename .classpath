@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="C:/Users/Fernando Lima/Documents/MEGA/TI/Eclipse Workspace/ProjetoClube/lib/jersey-client.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Fernando Lima/Documents/MEGA/TI/Eclipse Workspace/ProjetoClube/lib/jersey-common.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Fernando Lima/Documents/MEGA/TI/Eclipse Workspace/ProjetoClube/lib/jersey-container-servlet.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Fernando Lima/Documents/MEGA/TI/Eclipse Workspace/ProjetoClube/lib/jersey-container-servlet-core.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Fernando Lima/Documents/MEGA/TI/Eclipse Workspace/ProjetoClube/lib/jersey-hk2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Fernando Lima/Documents/MEGA/TI/Eclipse Workspace/ProjetoClube/lib/jersey-media-jaxb.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Fernando Lima/Documents/MEGA/TI/Eclipse Workspace/ProjetoClube/lib/jersey-media-json-binding.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Fernando Lima/Documents/MEGA/TI/Eclipse Workspace/ProjetoClube/lib/jersey-media-sse.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Fernando Lima/Documents/MEGA/TI/Eclipse Workspace/ProjetoClube/lib/jersey-server.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Fernando Lima/Documents/MEGA/TI/Eclipse Workspace/ProjetoClube/lib/javax.ws.rs-api-2.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Fernando Lima/Documents/MEGA/TI/Eclipse Workspace/ProjetoClube/lib/gson-2.2.2.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
