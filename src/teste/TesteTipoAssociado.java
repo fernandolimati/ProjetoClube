@@ -1,16 +1,14 @@
 package teste;
 
-import entidade.EntidadeTipoAssociado;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import persistencia.TipoAssociadoDao;
+import entidade.EntidadeTipoAssociado;
 import persistencia.TipoAssociadoDaoRest;
 
 public class TesteTipoAssociado {
 	
-	static TipoAssociadoDaoRest dao = new TipoAssociadoDaoRest();
+	static TipoAssociadoDaoRest dao;
     
     @SuppressWarnings("resource")
 	public static void main(String[] args) {
@@ -32,7 +30,11 @@ public class TesteTipoAssociado {
         	case 1:
         		//TIPO ASSOCIADO TESTE LISTAGEM
         		limparTela();
-        		tipoAssociadoListagemTeste();
+        		try {
+					tipoAssociadoListagemTeste();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
         		break;
         		
         	case 2:
@@ -41,7 +43,12 @@ public class TesteTipoAssociado {
             	String descricao = new Scanner(System.in).nextLine();
             	System.out.println("Valor:. ");
             	double valor = new Scanner(System.in).nextDouble();
-        		tipoAssociadoIncluirTeste(descricao,valor);
+        		try {
+					tipoAssociadoIncluirTeste(descricao,valor);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
         		limparTela();
         		break;
         		
@@ -55,20 +62,32 @@ public class TesteTipoAssociado {
             	obj.setDescricao(new Scanner(System.in).nextLine());
             	System.out.println("Valor Novo:.");
             	obj.setValorMensalidade(new Scanner(System.in).nextDouble());
-            	tipoAssociadoAtualizarTeste(obj);
+            	try {
+					tipoAssociadoAtualizarTeste(obj);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
         		break;
         		
         	case 4:
         		//TIPO ASSOCIADO TESTE CONSULTA
         		limparTela();
         		System.out.println("ID:.");
-            	tipoAssociadoConsultaTeste(new Scanner(System.in).nextInt());
+            	try {
+					tipoAssociadoConsultaTeste(new Scanner(System.in).nextInt());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
         		break;
         	
         	case 5:
         		//TIPO ASSOCIADO TESTE EXCLUIR
         		System.out.println("ID:.");
-        		tipoAssociadoExcluirTeste(new Scanner(System.in).nextInt());
+        		try {
+					tipoAssociadoExcluirTeste(new Scanner(System.in).nextInt());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
         		limparTela();
         		break;
         	
@@ -89,7 +108,8 @@ public class TesteTipoAssociado {
 		for(int i=0;i<50;i++)System.out.println();
 	}
     
-    public static void tipoAssociadoListagemTeste() {
+    public static void tipoAssociadoListagemTeste() throws Exception {
+    	dao = TipoAssociadoDaoRest.getInstance();
     	System.out.println(" ___________________________________________________________________");
     	System.out.println("|                    LISTAGEM TIPO ASSOCIADO                        |");
     	System.out.println("|___________________________________________________________________|");
@@ -109,41 +129,29 @@ public class TesteTipoAssociado {
 		System.out.println("");
     }
 
-    public static void tipoAssociadoIncluirTeste(String descricao, double mensalidade) {
+    public static void tipoAssociadoIncluirTeste(String descricao, double mensalidade) throws Exception {
+    	dao = TipoAssociadoDaoRest.getInstance();
     	EntidadeTipoAssociado objTipoAssociado = new EntidadeTipoAssociado();
     	objTipoAssociado.setDescricao(descricao);
     	objTipoAssociado.setValorMensalidade(mensalidade);
-    	
-    	TipoAssociadoDao daoTipoAssociado = new TipoAssociadoDao();
-    	try {
-			daoTipoAssociado.incluir(objTipoAssociado);
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-		}
+    	dao.incluir(objTipoAssociado);
  
     }
     
-    public static void tipoAssociadoAtualizarTeste(EntidadeTipoAssociado obj) {
-    	TipoAssociadoDao dao = new TipoAssociadoDao();
-    	try {
-			dao.atualizar(obj);
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-		}
+    public static void tipoAssociadoAtualizarTeste(EntidadeTipoAssociado obj) throws Exception {
+    	dao = TipoAssociadoDaoRest.getInstance();
+    	dao.atualizar(obj);
     }
 
-    public static void tipoAssociadoConsultaTeste(int id) {
+    public static void tipoAssociadoConsultaTeste(int id) throws Exception {
+    	dao = TipoAssociadoDaoRest.getInstance();
     	EntidadeTipoAssociado ass = dao.consultar(id);
 		System.out.println("Cod:. "+ass.getCodigo()+" | Descrição:. "+ass.getDescricao()+" | Valor Mensalidade:. R$"+ass.getValorMensalidade());
     }
 
-    public static void tipoAssociadoExcluirTeste(int id) {
-    	TipoAssociadoDao dao = new TipoAssociadoDao();
-    	try {
-			dao.excluir(id);
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-		}
+    public static void tipoAssociadoExcluirTeste(int id) throws Exception {
+    	dao = TipoAssociadoDaoRest.getInstance();
+    	System.out.println("Excluir Response: "+ dao.excluir(id));
     }
 
 }
