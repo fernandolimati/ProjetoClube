@@ -2,26 +2,26 @@ package entidade;
 
 public class EntidadeItemPedido {
 	
-	private int id;
-	private double precoMomento;
-	private int quantidade;
+	private int idItemPedido;
+	private double precoMomentoItemPedido;
+	private int quantidadeItemPedido;
 	private EntidadeProduto produto;
 	private EntidadePedido pedido;
 	
 	public EntidadeItemPedido(int id, double precoMomento, int quantidade, EntidadeProduto produto,
 			EntidadePedido pedido) {
 		super();
-		this.id = id;
-		this.precoMomento = precoMomento;
-		this.quantidade = quantidade;
+		this.idItemPedido = id;
+		this.precoMomentoItemPedido = precoMomento;
+		this.quantidadeItemPedido = quantidade;
 		this.produto = produto;
 		this.pedido = pedido;
 	}
 	public EntidadeItemPedido(double precoMomento, int quantidade, EntidadeProduto produto,
 			EntidadePedido pedido) {
 		super();
-		this.precoMomento = precoMomento;
-		this.quantidade = quantidade;
+		this.precoMomentoItemPedido = precoMomento;
+		this.quantidadeItemPedido = quantidade;
 		this.produto = produto;
 		this.pedido = pedido;
 	}
@@ -29,24 +29,24 @@ public class EntidadeItemPedido {
 		this.produto = null;
 		this.pedido = null;
 	}
-	
-	public int getId() {
-		return id;
+		
+	public int getIdItemPedido() {
+		return idItemPedido;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public void setIdItemPedido(int idItemPedido) {
+		this.idItemPedido = idItemPedido;
 	}
-	public double getPrecoMomento() {
-		return precoMomento;
+	public double getPrecoMomentoItemPedido() {
+		return precoMomentoItemPedido;
 	}
-	public void setPrecoMomento(double precoMomento) {
-		this.precoMomento = precoMomento;
+	public void setPrecoMomentoItemPedido(double precoMomentoItemPedido) {
+		this.precoMomentoItemPedido = precoMomentoItemPedido;
 	}
-	public int getQuantidade() {
-		return quantidade;
+	public int getQuantidadeItemPedido() {
+		return quantidadeItemPedido;
 	}
-	public void setQuantidade(int quantidade) {
-		this.quantidade = quantidade;
+	public void setQuantidadeItemPedido(int quantidadeItemPedido) {
+		this.quantidadeItemPedido = quantidadeItemPedido;
 	}
 	public EntidadeProduto getProduto() {
 		return produto;
