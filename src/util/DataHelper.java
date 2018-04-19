@@ -80,4 +80,51 @@ public class DataHelper {
 		}
 	}
 	
+	private int getCampo(int tipoCampo) {
+		GregorianCalendar gc = new GregorianCalendar();
+		gc.setTime(data);
+		return gc.get(tipoCampo);
+	}
+	public String getDiaDaSemana() {
+		switch (getCampo(Calendar.DAY_OF_WEEK)) {
+		case 1:	return "Domingo";
+		case 2: return "Segunda-Feira";
+		case 3:	return "Terça-Feira";
+		case 4:	return "Quarta-Feira";
+		case 5:	return "Quinta-Feira";
+		case 6:	return "Sexta-Feira";
+		case 7:	return "Sábado";
+		default: return "";
+		}
+	}
+	
+	public String getHorario() {
+		SimpleDateFormat formatador2 = new SimpleDateFormat("HH:mm:ss");
+		return formatador2.format(data);
+	}
+	public String getDataMesAno() {
+		SimpleDateFormat formatador2 = new SimpleDateFormat("yyyy-MM-dd");
+		return formatador2.format(data);
+	}
+	public int getDias() {
+		return getCampo(Calendar.DAY_OF_MONTH);
+	}
+	public int getMeses() {
+		return getCampo(Calendar.MONTH);
+	}
+	public int getAnos() {
+		return getCampo(Calendar.YEAR);
+	}
+	public int getHoras() {
+		return getCampo(Calendar.HOUR);
+	}
+	public int getMinutos() {
+		return getCampo(Calendar.MINUTE);
+	}
+	public int getSegundos() {
+		return getCampo(Calendar.SECOND);
+	}
+
+	
+	
 }
