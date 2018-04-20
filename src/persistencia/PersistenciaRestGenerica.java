@@ -17,9 +17,12 @@ public class PersistenciaRestGenerica<T> implements PersistenciaRestGenericaInte
 
 	private String urlPai;
 	private Class<T[]> classeVetor;
-	
-	public PersistenciaRestGenerica(Class<T> classe,Class<T[]> classeVetor){
+	private Class<T> classe;
+	private String msgError = "Conexão inválida, requisição com erro ou conexão perdida.";
+
+	public PersistenciaRestGenerica(Class<T> classe, Class<T[]> classeVetor) {
 		this.classeVetor = classeVetor;
+		this.classe = classe;
 		switch (classe.getName()) {
 		case "entidade.EntidadeAssociado":
 			this.urlPai = "http://localhost:8080/ProjetoRest/associado/";
@@ -40,7 +43,7 @@ public class PersistenciaRestGenerica<T> implements PersistenciaRestGenericaInte
 			break;
 		}
 	}
-	
+
 	@Override
 	public boolean incluir(T tipo) throws Exception {
 		URL url;
@@ -57,13 +60,20 @@ public class PersistenciaRestGenerica<T> implements PersistenciaRestGenericaInte
 		printStream.println(json);
 
 		conn.connect();
-		@SuppressWarnings("resource")
-		int saida = new Scanner(conn.getInputStream()).nextInt();
-		
-		if (saida > 0)
-			return true;
-		else
-			return false;
+
+		int responseCode = conn.getResponseCode();
+
+		if (responseCode == 201) {
+			@SuppressWarnings("resource")
+			int saida = new Scanner(conn.getInputStream()).nextInt();
+
+			if (saida > 0)
+				return true;
+			else
+				return false;
+		} else {
+			throw new Exception(msgError);
+		}
 	}
 
 	@Override
@@ -78,22 +88,23 @@ public class PersistenciaRestGenerica<T> implements PersistenciaRestGenericaInte
 		InputStream in = conn.getInputStream();
 
 		int responseCode = conn.getResponseCode();
-		if (responseCode / 100 != 2) {
-			return false;
-		}
 
-		br = new BufferedReader(new InputStreamReader(in));
-		try {
-			resp = Integer.parseInt(br.readLine());
-		} finally {
-			conn.disconnect();
-			br.close();
-			in.close();
+		if (responseCode == 201) {
+			br = new BufferedReader(new InputStreamReader(in));
+			try {
+				resp = Integer.parseInt(br.readLine());
+			} finally {
+				conn.disconnect();
+				br.close();
+				in.close();
+			}
+			if (resp > 0)
+				return true;
+			else
+				return false;
+		} else {
+			throw new Exception(msgError);
 		}
-		if (resp > 0)
-			return true;
-		else
-			return false;
 	}
 
 	@Override
@@ -113,12 +124,18 @@ public class PersistenciaRestGenerica<T> implements PersistenciaRestGenericaInte
 
 		conn.connect();
 
-		@SuppressWarnings("resource")
-		int saida = new Scanner(conn.getInputStream()).nextInt();
-		if (saida > 0)
-			return true;
-		else
-			return false;
+		int responseCode = conn.getResponseCode();
+
+		if (responseCode == 201) {
+			@SuppressWarnings("resource")
+			int saida = new Scanner(conn.getInputStream()).nextInt();
+			if (saida > 0)
+				return true;
+			else
+				return false;
+		} else {
+			throw new Exception(msgError);
+		}
 	}
 
 	@Override
@@ -134,23 +151,34 @@ public class PersistenciaRestGenerica<T> implements PersistenciaRestGenericaInte
 		InputStream in = conn.getInputStream();
 
 		int responseCode = conn.getResponseCode();
-
-		if (responseCode / 100 != 2) {
-			return null;
+		if (responseCode == 201 || responseCode == 202) {
+			br = new BufferedReader(new InputStreamReader(in));
+			if (responseCode == 202) {
+				try {
+					Gson gson = new Gson();
+					T[] listaObj = gson.fromJson(br, classeVetor);
+					for (int i = 0; i < listaObj.length; i++)
+						lista.add(listaObj[i]);
+				} finally {
+					conn.disconnect();
+					br.close();
+					in.close();
+				}
+			} else {
+				try {
+					Gson gson = new Gson();
+					T listaObj = gson.fromJson(br, classe);
+					lista.add(listaObj);
+				} finally {
+					conn.disconnect();
+					br.close();
+					in.close();
+				}
+			}
+			return lista;
+		} else {
+			throw new Exception(msgError);
 		}
-
-		br = new BufferedReader(new InputStreamReader(in));
-		try {
-			Gson gson = new Gson();
-			T[] listaObj = gson.fromJson(br, classeVetor);
-			for (int i = 0; i < listaObj.length; i++)
-				lista.add(listaObj[i]);
-		} finally {
-			conn.disconnect();
-			br.close();
-			in.close();
-		}
-		return lista;
 	}
 
 	@Override
@@ -167,22 +195,22 @@ public class PersistenciaRestGenerica<T> implements PersistenciaRestGenericaInte
 
 		int responseCode = conn.getResponseCode();
 
-		if (responseCode / 100 != 2) {
-			return null;
-		}
-
-		br = new BufferedReader(new InputStreamReader(in));
-		try {
-			Gson gson = new Gson();
-			T[] listaObj = gson.fromJson(br, classeVetor);
-			for (int i = 0; i < listaObj.length; i++)
-				lista.add(listaObj[i]);
-		} finally {
-			conn.disconnect();
-			br.close();
-			in.close();
+		if (responseCode == 201) {
+			br = new BufferedReader(new InputStreamReader(in));
+			try {
+				Gson gson = new Gson();
+				T[] listaObj = gson.fromJson(br, classeVetor);
+				for (int i = 0; i < listaObj.length; i++)
+					lista.add(listaObj[i]);
+			} finally {
+				conn.disconnect();
+				br.close();
+				in.close();
+			}
+		} else {
+			throw new Exception(msgError);
 		}
 		return lista;
 	}
-	
+
 }

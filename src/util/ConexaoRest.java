@@ -15,17 +15,17 @@ public class ConexaoRest {
 	
 	private ConexaoRest() throws Exception {
 		loginJWT("fernando","123");
-		dataTokenEncerra = new DataHelper(new Date());
-		dataTokenEncerra.adicionarHoras(+23);
+		ConexaoRest.dataTokenEncerra = new DataHelper(new Date());
+		ConexaoRest.dataTokenEncerra.adicionarHoras(+24);
 	}
 	public static ConexaoRest getInstance() throws Exception {
-	      if(instance == null) {
-	         instance = new ConexaoRest();
-	      }else if(dataTokenEncerra.comparar(new Date()) <= 0) {
-	    	  instance = new ConexaoRest();   	  
-	      }else {
-	    	  return instance;
-	      }
+		if (instance == null) {
+			instance = new ConexaoRest();
+		} else if (dataTokenEncerra.comparar(new Date()) == -1) {
+			instance = new ConexaoRest();
+		} else {
+			return instance;
+		}
 		return instance;
 	}
 	

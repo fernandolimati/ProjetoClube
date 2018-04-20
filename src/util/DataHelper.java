@@ -11,7 +11,9 @@ public class DataHelper {
 	private Date data;
 	private transient SimpleDateFormat formatador = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-	public DataHelper() {}
+	public DataHelper() {
+	}
+	
 	public DataHelper(Date data) {
 		this.data = data;
 	}
@@ -65,11 +67,11 @@ public class DataHelper {
 		adicionar(quantidade, Calendar.SECOND);
 	}
 	
-	public int comparar(Date data) {
+	public int comparar(Date dataInput) {
 		GregorianCalendar gc = new GregorianCalendar();
 		gc.setTime(data);
-		Calendar c = new GregorianCalendar();
-		c.setTime(data);
+		GregorianCalendar c = new GregorianCalendar();
+		c.setTime(dataInput);
 		return gc.compareTo(c);
 	}
 	public Integer comparar(String data) throws Exception {
@@ -124,7 +126,5 @@ public class DataHelper {
 	public int getSegundos() {
 		return getCampo(Calendar.SECOND);
 	}
-
-	
 	
 }
